@@ -62,4 +62,35 @@ class GildedRoseTest {
         assertEquals(9, app.items[1].sellIn);
         assertEquals(0, app.items[1].quality);
     }
+
+    @Test
+    @DisplayName("Aged Brie increses in quality as it gets older")
+    public void agedBrieQuality() {
+        // GIVEN
+        var items = new Item[] {
+                new Item("Aged Brie", 10, 1),
+                new Item("Aged Brie", 0, 1),
+                new Item("Aged Brie", -10, 1)
+        };
+
+        var app = new GildedRose(items);
+
+        // WHEN
+        app.updateQuality();
+
+        // THEN
+        assertEquals("Aged Brie", app.items[0].name);
+        assertEquals(9, app.items[0].sellIn);
+        assertEquals(2, app.items[0].quality);
+
+        var brie2 = app.items[1];
+        assertEquals("Aged Brie", brie2.name);
+        assertEquals(-1, brie2.sellIn);
+        assertEquals(3, brie2.quality);
+
+        var brie3 = app.items[2];
+        assertEquals("Aged Brie", brie3.name);
+        assertEquals(-11, brie3.sellIn);
+        assertEquals(3, brie3.quality);
+    }
 }
