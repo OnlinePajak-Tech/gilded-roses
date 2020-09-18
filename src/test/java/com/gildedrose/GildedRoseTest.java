@@ -177,4 +177,39 @@ class GildedRoseTest {
         assertEquals(0, backstagePass3.quality);
     }
 
+    @Test
+    @DisplayName("The backstage pass's quality cannot exceed 50")
+    public void backStagePassQualityCap() {
+        // GIVEN
+        var items = new Item[] {
+                new Item("Backstage passes to a TAFKAL80ETC concert", 15, 50),
+                new Item("Backstage passes to a TAFKAL80ETC concert", 10, 49),
+                new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49),
+                new Item("Backstage passes to a TAFKAL80ETC concert", 0, 49)
+        };
+
+        var app = new GildedRose(items);
+
+        // WHEN
+        app.updateQuality();
+
+        // THEN
+        assertEquals("Backstage passes to a TAFKAL80ETC concert", app.items[0].name);
+        assertEquals(14, app.items[0].sellIn);
+        assertEquals(50, app.items[0].quality);
+
+        var backstagePass1 = app.items[1];
+        assertEquals("Backstage passes to a TAFKAL80ETC concert", backstagePass1.name);
+        assertEquals(9, backstagePass1.sellIn);
+        assertEquals(50, backstagePass1.quality);
+        var backstagePass2 = app.items[2];
+        assertEquals("Backstage passes to a TAFKAL80ETC concert", backstagePass2.name);
+        assertEquals(4, backstagePass2.sellIn);
+        assertEquals(50, backstagePass2.quality);
+        var backstagePass3 = app.items[3];
+        assertEquals("Backstage passes to a TAFKAL80ETC concert", backstagePass3.name);
+        assertEquals(-1, backstagePass3.sellIn);
+        assertEquals(0, backstagePass3.quality);
+    }
+
 }

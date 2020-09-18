@@ -7,6 +7,14 @@ class GildedRose {
         this.items = items;
     }
 
+    private void updateOrdinaryItem(Item item) {
+        item.sellIn -= 1;
+    }
+
+    private boolean isExpired(Item item) {
+        return item.sellIn <= 0;
+    }
+
     public void updateQuality() {
         for (int i = 0; i < items.length; i++) {
             if (!items[i].name.equals("Aged Brie")
